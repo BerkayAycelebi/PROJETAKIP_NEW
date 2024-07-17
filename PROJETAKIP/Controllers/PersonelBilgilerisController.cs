@@ -90,33 +90,54 @@ namespace PROJETAKIP.Controllers
             return View(personelBilgileri);
         }
 
-        // GET: PersonelBilgileris/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PersonelBilgileri personelBilgileri = db.PersonelBilgileris.Find(id);
-            if (personelBilgileri == null)
-            {
-                return HttpNotFound();
-            }
-            return View(personelBilgileri);
-        }
+		public ActionResult PersonelKart() //verileri listeler
+		{
+			return View(db.PersonelBilgileris.ToList());
+		}
 
-        // POST: PersonelBilgileris/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            PersonelBilgileri personelBilgileri = db.PersonelBilgileris.Find(id);
-            db.PersonelBilgileris.Remove(personelBilgileri);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
-        protected override void Dispose(bool disposing)
+		// GET: PersonelBilgileris/Delete/5
+		//public ActionResult Delete(int? id)
+		//{
+		//    if (id == null)
+		//    {
+		//        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+		//    }
+		//    PersonelBilgileri personelBilgileri = db.PersonelBilgileris.Find(id);
+		//    if (personelBilgileri == null)
+		//    {
+		//        return HttpNotFound();
+		//    }
+		//    return View(personelBilgileri);
+		//}
+
+		//// POST: PersonelBilgileris/Delete/5
+		//[HttpPost, ActionName("Delete")]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult DeleteConfirmed(int id)
+		//{
+		//    PersonelBilgileri personelBilgileri = db.PersonelBilgileris.Find(id);
+		//    db.PersonelBilgileris.Remove(personelBilgileri);
+		//    db.SaveChanges();
+		//    return RedirectToAction("Index");
+		//}
+
+
+		public ActionResult Delete(int? Id)
+		{
+			if (Id == null || Id == 0)
+			{
+				return HttpNotFound();
+			}
+			var t = db.PersonelBilgileris.Find(Id);
+
+			db.PersonelBilgileris.Remove(t);
+			db.SaveChanges();
+
+			return RedirectToAction("Index");
+		}
+
+		protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
